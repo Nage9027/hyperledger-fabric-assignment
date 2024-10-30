@@ -1,3 +1,6 @@
+# Note
+This is an internship project given by Smart Falcon Company by using of Block Chain technology
+But one thing in the Presence of go language I have used Java. I do not have any such kind of basic knowledge on goal language thats why I have used Java in the presence of go If you give the time for me then I will definitely learn the go language
 # hyperledger-fabric-assignment
 This is an industry post provided by the Smartfallcom company on the Block chain technology
 # Hyperledger Fabric Asset Management System
