@@ -1,0 +1,1 @@
+./network.sh deployCC -ccn asset_contract -ccp ../chaincode/asset_contract -ccl java
