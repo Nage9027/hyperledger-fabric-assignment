@@ -1,0 +1,21 @@
+project-root/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/                      # Java source code
+│   │   │   ├── com/
+│   │   │   │   └── example/
+│   │   │   │       └── fabric/
+│   │   │   │           ├── asset_contract/    # Smart contract code
+│   │   │   │           └── api/               # REST API code
+│   │   │   └── resources/
+│   │   │       ├── application.properties     # API configuration
+│   │   │       └── connection-profile.json    # Hyperledger Fabric connection profile
+│   │
+├── Dockerfile                              # Docker configuration for building the REST API container
+├── fabric-samples/                         # Hyperledger Fabric setup and configurations
+│   └── test-network/                       # Network setup scripts and configurations
+│       ├── chaincode/                      # Chaincode (smart contract) deployment directory
+│       └── network.sh                      # Script to manage Fabric network
+│
+└── README.md                               # Project documentation
