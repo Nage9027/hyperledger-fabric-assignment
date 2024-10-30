@@ -1,0 +1,10 @@
+{
+  "dealerId": "123",
+  "msisdn": "9876543210",
+  "mpin": "1234",
+  "balance": 1000,
+  "status": "active",
+  "transAmount": 0,
+  "transType": "credit",
+  "remarks": "Initial creation"
+}
