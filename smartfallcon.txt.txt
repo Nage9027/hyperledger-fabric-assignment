@@ -1,0 +1,123 @@
+Level 1: Setting up the Hyperledger Fabric Test Network
+
+Level 2: Developing the Smart Contract
+
+Level 3: REST API and Docker Integration
+
+Level 1: Setting up the Hyperledger Fabric Test Network
+Objective: Initialize a test network to simulate a Hyperledger Fabric environment on your machine.
+
+Steps:
+1) Prerequisites:
+
+Install Docker and Docker Compose on your machine.
+Install Hyperledger Fabric CLI binaries and samples.
+2) Download Fabric Samples:
+
+Run the following command to download Fabric samples, binaries, and Docker images:
+bash
+
+curl -sSL https://bit.ly/2ysbOFE | bash -s
+3) Navigate to the Test Network:
+
+Go to the test-network directory:
+bash
+
+cd fabric-samples/test-network
+4) Launch the Test Network:
+
+Start the test network and create a channel (e.g., "mychannel"):
+bash
+
+./network.sh up createChannel -c mychannel
+Deploy Chaincode:
+
+5) Deploy a basic chaincode to simulate asset management:
+bash
+
+./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go -ccl go
+
+
+
+Level 2: Developing the Smart Contract
+Objective: Implement a smart contract to create, update, query, and retrieve the transaction history of assets.
+
+Steps:
+1) Create a New Java Class for the Contract:
+
+Define the AssetContract class to implement functions for asset management (e.g., createAsset, updateAsset, etc.).
+2) Implement CRUD Functions in the Contract:
+
+Define asset operations within the AssetContract class.
+
+Example code for createAsset, updateAsset, and queryAsset:
+
+3) Deploy the Smart Contract:
+
+./network.sh deployCC -ccn assetContract -ccp ../your_contract_path -ccl java
+
+Level 3: REST API and Docker Integration
+Objective: Build a REST API to interact with the smart contract and package it into a Docker container.
+
+Steps:
+1) Set Up a Spring Boot Project:
+
+Create a Spring Boot project with dependencies for Spring Web and Fabric Gateway.
+Add the Fabric Gateway dependency to pom.xml:
+xml
+ 
+<dependency>
+    <groupId>org.hyperledger.fabric</groupId>
+    <artifactId>fabric-gateway-java</artifactId>
+    <version>2.5.0</version>
+</dependency>
+2) Define REST Endpoints:
+
+Implement endpoints to interact with the smart contract functions (createAsset, updateAsset, queryAsset, getAssetHistory).
+
+Example endpoint for createAsset:
+
+java
+ 
+@PostMapping("/create")
+public String createAsset(@RequestBody Asset asset) {
+    contract.submitTransaction("createAsset", asset.getDealerId(), asset.getMsisdn(), asset.getMpin(), String.valueOf(asset.getBalance()), asset.getStatus(), String.valueOf(asset.getTransAmount()), asset.getTransType(), asset.getRemarks());
+    return "Asset created successfully";
+}
+3) Dockerize the REST API:
+
+Add a Dockerfile in the project root:
+dockerfile
+ 
+FROM openjdk:11-jdk-slim
+WORKDIR /app
+  target/AssetAPI.jar AssetAPI.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "AssetAPI.jar"]
+Build the Docker image:
+bash
+ 
+docker build -t asset-api .
+Run the container:
+bash
+ 
+docker run -p 8080:8080 --network="fabric_test_network" asset-api
+4) Test API Endpoints:
+
+Use Postman or cURL to test each endpoint. For example:
+bash
+ 
+curl -X POST http://localhost:8080/api/assets/create -H "Content-Type: application/json" -d '{
+    "dealerId": "123",
+    "msisdn": "9876543210",
+    "mpin": "1234",
+    "balance": 1000.0,
+    "status": "Active",
+    "transAmount": 500.0,
+    "transType": "Credit",
+    "remarks": "Initial Balance"
+}'
+
+Note:- i have used the java in place of go language.if you gave the time for Me i will learn the Go language.
+
+This guide provides a structured approach across all three levels for setting up, developing, and deploying your Hyperledger Fabric project. Each level builds upon the previous one, culminating in a Dockerized REST API for asset management on a blockchain.
